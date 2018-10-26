@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <property name="LOG_DIR" value="/data/data/com.example.maxf.logbackexample/files/logs" />
+
+    <!-- Daily rollover appender that also appends timestamp and rolls over on startup -->
+    <appender name="FILEFULL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/dubsapp.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/dubsapp.%d{yyyyMMdd}_%d{HHmmss,UTC}.log</fileNamePattern>
+            <!-- keep 2 days' worth of history -->
+            <maxHistory>2</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSSS}\t [%4.4thread]\t %1.-1level\t %11logger{0}\t %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.classic.android.LogcatAppender">
+        <encoder>
+            <Pattern>[%4.4thread] %11logger{0}\t %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="AsyncFileAll" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>1000</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <appender-ref ref="FILEFULL" />
+    </appender>
+
+    <appender name="AsyncConsole" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>1000</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <appender-ref ref="STDOUT" />
+    </appender>
+
+    <root>
+        <level value="DEBUG" />
+        <appender-ref ref="AsyncFileAll" />
+        <appender-ref ref="AsyncConsole" />
+    </root>
+
+</configuration>
