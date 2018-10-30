@@ -4,9 +4,9 @@
 
     <!-- Daily rollover appender that also appends timestamp and rolls over on startup -->
     <appender name="FILEFULL" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_DIR}/dubsapp.log</file>
+        <file>${LOG_DIR}/app.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/log.%d{yyyyMMdd}_%d{HHmmss,UTC}.log</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/app.%d{yyyyMMdd}_%d{HHmmss,UTC}.log</fileNamePattern>
             <!-- keep 2 days' worth of history -->
             <maxHistory>2</maxHistory>
         </rollingPolicy>
